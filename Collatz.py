@@ -58,12 +58,14 @@ def collatz_eval(i, j):
         j = temp
     for x in range(i, j+1):
         cycleCount = 1
-        if x % 500 == 0:
-            global cache
-            finish = cache[1][int(x/500)]
-            maxCycles += finish
-
         while x > 1:
+            if x % 500 == 0 and x / 500 < 2000:
+                global cache
+                finish = cache[1][int(x/500) - 1]
+                cycleCount += finish
+                if cycleCount > maxCycles:
+                    maxCycles = cycleCount
+                break
             if x%2 == 0:
                 x = x / 2
             else:
