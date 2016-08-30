@@ -26,16 +26,16 @@ Collatz.log:
 	git log > Collatz.log
 
 RunCollatz.tmp: RunCollatz.in RunCollatz.out RunCollatz.py
-	-pylint Collatz.py
-	-pylint RunCollatz.py
+	#-pylint Collatz.py
+	#-pylint RunCollatz.py
 	./RunCollatz.py < RunCollatz.in > RunCollatz.tmp
 	diff RunCollatz.tmp RunCollatz.out
 
 TestCollatz.tmp: TestCollatz.py
-	-pylint Collatz.py
-	-pylint TestCollatz.py
-	coverage-3.5 run    --branch TestCollatz.py >  TestCollatz.tmp 2>&1
-	coverage-3.5 report -m                      >> TestCollatz.tmp
+	#-pylint Collatz.py
+	#-pylint TestCollatz.py
+	coverage run    --branch TestCollatz.py >  TestCollatz.tmp 2>&1
+	coverage report -m                      >> TestCollatz.tmp
 	cat TestCollatz.tmp
 
 check:

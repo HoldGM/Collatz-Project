@@ -6,10 +6,16 @@
 # Glenn P. Downing
 # ---------------------------
 
+#-------------
+# global cache
+#-------------
+
+w, h = 2000, 2
+cache = [[0 for x in range(w)] for y in range(h)]
+
 # ------------
 # collatz_read
 # ------------
-
 
 def collatz_read(s):
     """
@@ -24,6 +30,18 @@ def collatz_read(s):
 # collatz_eval
 # ------------
 
+def buildCache():
+        #start building cache
+        counter = 0
+        while counter < 1000000:
+            global cache
+            index = counter / 500
+            # print (int(index))
+            cache[0][int(index)] = counter
+            cache[1][int(index)] = collatz_eval(counter, counter)
+            counter += 500
+            index += 1
+
 
 def collatz_eval(i, j):
     """
@@ -31,6 +49,8 @@ def collatz_eval(i, j):
     j the end       of the range, inclusive
     return the max cycle length of the range [i, j]
     """
+    if i == 0 and j == 0:
+        return 0
     maxCycles = 0
     if i > j:
         temp = i
@@ -38,6 +58,11 @@ def collatz_eval(i, j):
         j = temp
     for x in range(i, j+1):
         cycleCount = 1
+        if x % 500 == 0:
+            global cache
+            finish = cache[1][int(x/500)]
+            maxCycles += finish
+
         while x > 1:
             if x%2 == 0:
                 x = x / 2
@@ -61,7 +86,7 @@ def collatz_print(w, i, j, v):
     j the end       of the range, inclusive
     v the max cycle length
     """
-    w.write(str(i) + " " + str(j) + " " + str(v) + "\n")
+    w.write(u"" + str(i) + " " + str(j) + " " + str(v) + "\n")
 
 # -------------
 # collatz_solve
@@ -69,6 +94,9 @@ def collatz_print(w, i, j, v):
 
 
 def collatz_solve(r, w):
+
+    buildCache()
+
     """
     r a reader
     w a writer
@@ -77,3 +105,4 @@ def collatz_solve(r, w):
         i, j = collatz_read(s)
         v = collatz_eval(i, j)
         collatz_print(w, i, j, v)
+
