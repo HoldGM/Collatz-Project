@@ -76,15 +76,15 @@ class TestCollatz(TestCase):
 
     def test_eval_6(self):
         v = collatz_eval(0, 50)
-        self.assertEqual(v, 112)
+        self.assertEqual(v, "Invalid Input")
 
     def test_eval_7(self):
         v = collatz_eval(0, 0)
-        self.assertEqual(v, 0)
+        self.assertEqual(v, "Invalid Input")
 
     def test_eval_8(self):
         v = collatz_eval(5, 0)
-        self.assertEqual(v, 8)
+        self.assertEqual(v, "Invalid Input")
 
     def test_eval_9(self):
         v = collatz_eval(10, 1000)
@@ -93,6 +93,14 @@ class TestCollatz(TestCase):
     def test_eval_10(self):
         v = collatz_eval(10, 1100)
         self.assertEqual(v, 179)
+
+    def test_eval_11(self):
+        v = collatz_eval(1, 1000000)
+        self.assertEqual(v, 525)
+
+    def test_eval_12(self):
+        v = collatz_eval(1, 1)
+        self.assertEqual(v, 1)
         
     # -----
     # print

@@ -1,0 +1,59 @@
+commit 3ace590a4e70056924f89bec1533f1310f9d4988
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Thu Sep 1 12:41:37 2016 -0500
+
+    cache complete fixed #7
+
+commit d2f689af25a316eb0a1fc49ace268fc4f5500729
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Tue Aug 30 13:27:28 2016 -0500
+
+    working on cache integration fixed #11
+
+commit 1dbd85e350133d0c96b28067a87f31e9f967af3c
+Author: Otis <otisbrower@yahoo.com>
+Date:   Mon Aug 29 23:51:01 2016 -0500
+
+    added cache, needs test on sphere fixed #5
+
+commit 49bb4b2f690bbe25538c23a6a9917e20d13409f1
+Author: Otis <otisbrower@yahoo.com>
+Date:   Mon Aug 29 22:28:32 2016 -0500
+
+    working on cache
+
+commit b29574149dc4d6f6249fb8a226ae3900c4aa82ee
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Thu Aug 25 13:51:06 2016 -0500
+
+    scrub
+
+commit 39c0986eaa918aae7bed90459013792b5e8218d7
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Thu Aug 25 13:49:35 2016 -0500
+
+    timed out on sphere
+
+commit fa4d61eb3e2c024c8eaacc89f2f943e67be4eb92
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Thu Aug 25 12:35:29 2016 -0500
+
+    adding travis.yml file
+
+commit 8f2aa643ac62bbc4e08e03289597fdf4ac6f6a6c
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Thu Aug 25 12:33:26 2016 -0500
+
+    starting project
+
+commit 048ca7c180361b9e6716c479707b956a3c1e77eb
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Thu Aug 25 11:40:14 2016 -0500
+
+    fixing files fixes #3
+
+commit 723039ee83e5f528b6be39205cf016d2c1a1ed00
+Author: otisbrower <otisbrower@yahoo.com>
+Date:   Thu Aug 25 11:34:45 2016 -0500
+
+    fixes #1
