@@ -102,21 +102,6 @@ def collatz_read(s):
     a = s.split()
     return [int(a[0]), int(a[1])]
 
-#------------
-# Eager Cache
-#------------
-def buildCache():
-        #start building cache
-        counter = 1
-        while counter < 1000:
-            global cache
-            index = counter / 500
-            # print (int(index))
-            result = collatz_eval(counter, counter + 500)
-            print(str(counter) + " " + str(counter + 499) + " " + str(result))
-            counter += 500
-            index += 1
-
 # ------------
 # collatz_eval
 # ------------
@@ -139,14 +124,21 @@ def collatz_eval(i, j):
         i = j
         j = temp
     interval = j - i
-    print (str(interval))
+    # print (str(interval))
     x = i
     while x <= j:
-        t = x
-        cycleCount = 1
-        if (x - 1) % 500 == 0 and interval >= 500:
-
+        # print("Start of Loop: " + str(x))
+        if x % 500 == 1 and interval >= 500:
+            # print("Cache Check!")
+            rangeMax = int(cache[x // 500])
+            # print(rangeMax)
+            if rangeMax > maxCycles:
+                maxCycles = rangeMax
+            x += 500
+            interval -= 500
         else:
+            t = x
+            cycleCount = 1
             while t > 1:
                 if t % 2 == 0:
                     t = t / 2
@@ -180,14 +172,13 @@ def collatz_print(w, i, j, v):
 
 
 def collatz_solve(r, w):
-
-    buildCache()
     """
     r a reader
     w a writer
     """
-    # for s in r:
-        # i, j = collatz_read(s)
-        # v = collatz_eval(i, j)
-        # collatz_print(w, i, j, v)
+    for s in r:
+        i, j = collatz_read(s)
+        # print(str(i) + " " + str(j))
+        v = collatz_eval(i, j)
+        collatz_print(w, i, j, v)
 
