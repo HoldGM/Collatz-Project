@@ -6,7 +6,11 @@
 # Glenn P. Downing
 # ---------------------------
 
-cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236, 262, 257, 239, 252, 234, 247, 260, 242, 255, 268, 237, 250, 263, 263, 
+#-------------
+# global cache
+#-------------
+
+eager_cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236, 262, 257, 239, 252, 234, 247, 260, 242, 255, 268, 237, 250, 263, 263, 
         276, 258, 209, 271, 271, 253, 266, 266, 235, 279, 248, 261, 212, 274, 243, 256, 256, 269, 269, 269, 251, 282, 251, 264, 264, 233, 
         277, 308, 259, 259, 259, 228, 272, 272, 272, 254, 285, 285, 267, 267, 267, 267, 311, 280, 311, 324, 249, 231, 262, 306, 244, 244, 
         275, 306, 275, 288, 244, 257, 288, 257, 257, 270, 270, 270, 314, 239, 283, 252, 314, 283, 252, 296, 265, 296, 265, 278, 309, 247, 
@@ -84,6 +88,7 @@ cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236, 262, 257, 2
         321, 339, 383, 259, 334, 321, 383, 352, 321, 334, 259, 427, 321, 321, 321, 383, 383, 383, 352, 321, 427, 365, 321, 352, 396, 352, 
         321, 308, 321, 352, 321, 321, 321, 321, 321, 352, 290, 259, 365, 290, 290, 365, 365, 352, 352, 440, 277, 396, 396, 290]
 
+lazy_cache = dict()
 
 # ------------
 # collatz_read
@@ -108,47 +113,52 @@ def collatz_eval(i, j):
     j the end       of the range, inclusive
     return the max cycle length of the range [i, j]
     """
-    if i == 0 and j == 0:
-        return 0
-    if i == 0:
-        i += 1
-    if j == 0:
-        j += 1
-    maxCycles = 0
-    if i > j:
-        temp = i
-        i = j
-        j = temp
-    interval = j - i
-    # print (str(interval))
-    x = i
-    while x <= j:
-        # Cache optimization, if the range to search is 
-        # covered by a precomputed value then the value will
-        # be pulled from the cache instead of computing directly
-        if x % 500 == 1 and interval >= 500:
-            rangeMax = int(cache[x // 500])
-            if rangeMax > maxCycles:
-                maxCycles = rangeMax
-            x += 500
-            interval -= 500
-        # Normal operation, if the range of values is not covered
-        # by the cache, the maximum cycle length will be computed normally
-        else:
+    try:
+        if i == 0 or j == 0 or i > 1000000 or j > 1000000:
+            raise IOError('Invalid Input')
+        maxCycles = 0
+        if i > j:
+            temp = i
+            i = j
+            j = temp
+        if i < (j //2):
+            i = j // 2
+
+        interval = j - i
+        x = i
+        while x <= j:
+            if x % 500 == 1 and interval >= 500:
+                interval_cycle_count = eager_cache[x // 500]
+                if interval_cycle_count > maxCycles:
+                    maxCycles = interval_cycle_count
+                x += 500
+                interval -= 500
+                continue
+            if x in lazy_cache:
+                cycleCount = lazy_cache[x]
+                if cycleCount > maxCycles:
+                    maxCycles = cycleCount
             t = x
             cycleCount = 1
             while t > 1:
+                if t in lazy_cache:
+                    cycleCount += lazy_cache[t] - 1
+                    lazy_cache[x] = cycleCount
+                    break
                 if t % 2 == 0:
                     t = t / 2
                 else:
                     t = t * 3 + 1
                 cycleCount += 1
+                
             if cycleCount > maxCycles:
                 maxCycles = cycleCount
+                lazy_cache[x] = cycleCount
             x += 1
             interval -= 1
-    return maxCycles
-
+        return maxCycles
+    except IOError as e:
+        return "Invalid Input"
 # -------------
 # collatz_print
 # -------------
@@ -170,12 +180,14 @@ def collatz_print(w, i, j, v):
 
 
 def collatz_solve(r, w):
+
     """
     r a reader
     w a writer
     """
     for s in r:
         i, j = collatz_read(s)
+        # print(str(i) + " " + str(j))
         v = collatz_eval(i, j)
         collatz_print(w, i, j, v)
 
