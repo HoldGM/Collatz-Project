@@ -2,3 +2,7 @@ Rand.py
 TempTest.in
 collatz-tests/
 temp.out
+*.pyc
+TempTest.in
+Rand.py
+*.tmp
