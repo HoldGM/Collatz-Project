@@ -101,6 +101,8 @@ def collatz_read(s):
     return a list of two ints, representing the beginning and end of a range, [i, j]
     """
     a = s.split()
+    if len(a) != 2:
+        return[ 0, 0]
     return [int(a[0]), int(a[1])]
 
 # ------------
@@ -123,7 +125,6 @@ def collatz_eval(i, j):
             j = temp
         if i < (j //2):
             i = j // 2
-
         interval = j - i
         x = i
         while x <= j:
@@ -187,6 +188,8 @@ def collatz_solve(r, w):
     """
     for s in r:
         i, j = collatz_read(s)
+        if i == 0 and j == 0:
+            continue
         # print(str(i) + " " + str(j))
         v = collatz_eval(i, j)
         collatz_print(w, i, j, v)
