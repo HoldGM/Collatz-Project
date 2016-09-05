@@ -6,3 +6,4 @@ temp.out
 TempTest.in
 *.tmp
 __pychache__/
+.coverage
