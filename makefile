@@ -1,17 +1,16 @@
-FILES :=                              \
-    Collatz.html                      \
-    Collatz.log                       \
-    Collatz.py                        \
-    RunCollatz.in                     \
-    RunCollatz.out                    \
-    RunCollatz.py                     \
-    TestCollatz.out                   \
-    TestCollatz.py
-
-#    collatz-tests/EID-RunCollatz.in   \
-#    collatz-tests/EID-RunCollatz.out  \
-#    collatz-tests/EID-TestCollatz.out \
-#    collatz-tests/EID-TestCollatz.py  \
+FILES :=                              	 \
+    Collatz.html                      	 \
+    Collatz.log                       	 \
+    Collatz.py                        	 \
+    RunCollatz.in                     	 \
+    RunCollatz.out                    	 \
+    RunCollatz.py                     	 \
+    TestCollatz.out                      \
+    TestCollatz.py 					     \
+    collatz-tests/odb234-RunCollatz.in   \
+    collatz-tests/odb234-RunCollatz.out  \
+    collatz-tests/odb234-TestCollatz.out \
+    collatz-tests/odb234-TestCollatz.py  \
 
 .pylintrc:
 	pylint --disable=bad-whitespace,missing-docstring,pointless-string-statement --reports=n --generate-rcfile > $@
@@ -26,14 +25,14 @@ Collatz.log:
 	git log > Collatz.log
 
 RunCollatz.tmp: RunCollatz.in RunCollatz.out RunCollatz.py
-	#-pylint Collatz.py
-	#-pylint RunCollatz.py
+	-pylint Collatz.py
+	-pylint RunCollatz.py
 	./RunCollatz.py < RunCollatz.in > RunCollatz.tmp
 	diff RunCollatz.tmp RunCollatz.out
 
 TestCollatz.tmp: TestCollatz.py
-	#-pylint Collatz.py
-	#-pylint TestCollatz.py
+	-pylint Collatz.py
+	-pylint TestCollatz.py
 	coverage run    --branch TestCollatz.py >  TestCollatz.tmp 2>&1
 	coverage report -m                      >> TestCollatz.tmp
 	cat TestCollatz.tmp
