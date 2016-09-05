@@ -4,5 +4,5 @@ collatz-tests/
 temp.out
 *.pyc
 TempTest.in
-Rand.py
 *.tmp
+__pychache__/
