@@ -48,6 +48,12 @@ class TestCollatz(TestCase):
             self.assertEqual(i, int(a[0]))
             self.assertEqual(j, int(a[1]))
 
+    def test_read_4(self):
+        s = "3\n"
+        i, j = collatz_read(s)
+        self.assertEqual(i, 0)
+        self.assertEqual(j, 0)
+
 
 
     # ----
@@ -144,6 +150,12 @@ class TestCollatz(TestCase):
         w = StringIO()
         collatz_solve(r, w)
         self.assertEqual(w.getvalue(), "");
+
+    def test_solve_4(self):
+        r = StringIO(u"3\n")
+        w = StringIO()
+        collatz_solve(r, w)
+        self.assertEqual(w.getvalue(), "")
 
 # ----
 # main
