@@ -9,11 +9,9 @@
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Collatz</strong></big></big></font></td
 ><td align=right valign=bottom
 ><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/otis/Documents/cs373-collatz/Collatz.py">/home/otis/Documents/cs373-collatz/Collatz.py</a></font></td></tr></table>
-    <p><tt>#&nbsp;---------------------------<br>
-#&nbsp;projects/collatz/Collatz.py<br>
-#&nbsp;Copyright&nbsp;(C)&nbsp;2016<br>
-#&nbsp;Glenn&nbsp;P.&nbsp;Downing<br>
-#&nbsp;---------------------------</tt></p>
+    <p><tt>Main&nbsp;Collatz&nbsp;Functions,&nbsp;these&nbsp;functions&nbsp;will&nbsp;take&nbsp;in&nbsp;starting&nbsp;and&nbsp;stopping<br>
+values&nbsp;for&nbsp;the&nbsp;Collatz&nbsp;range&nbsp;and&nbsp;return&nbsp;the&nbsp;maximum&nbsp;number&nbsp;of&nbsp;cycles&nbsp;needed&nbsp;to<br>
+satisfy&nbsp;the&nbsp;Collatz&nbsp;Conjecture</tt></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
@@ -21,18 +19,18 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-collatz_eval"><strong>collatz_eval</strong></a>(i, j)</dt><dd><tt>i&nbsp;the&nbsp;beginning&nbsp;of&nbsp;the&nbsp;range,&nbsp;inclusive<br>
+<td width="100%"><dl><dt><a name="-collatz_eval"><strong>collatz_eval</strong></a>(ith, jth)</dt><dd><tt>i&nbsp;the&nbsp;beginning&nbsp;of&nbsp;the&nbsp;range,&nbsp;inclusive<br>
 j&nbsp;the&nbsp;end&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;range,&nbsp;inclusive<br>
 return&nbsp;the&nbsp;max&nbsp;cycle&nbsp;length&nbsp;of&nbsp;the&nbsp;range&nbsp;[i,&nbsp;j]</tt></dd></dl>
- <dl><dt><a name="-collatz_print"><strong>collatz_print</strong></a>(w, i, j, v)</dt><dd><tt>print&nbsp;three&nbsp;ints<br>
+ <dl><dt><a name="-collatz_print"><strong>collatz_print</strong></a>(write, ith, jth, value)</dt><dd><tt>print&nbsp;three&nbsp;ints<br>
 w&nbsp;a&nbsp;writer<br>
 i&nbsp;the&nbsp;beginning&nbsp;of&nbsp;the&nbsp;range,&nbsp;inclusive<br>
 j&nbsp;the&nbsp;end&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;the&nbsp;range,&nbsp;inclusive<br>
 v&nbsp;the&nbsp;max&nbsp;cycle&nbsp;length</tt></dd></dl>
- <dl><dt><a name="-collatz_read"><strong>collatz_read</strong></a>(s)</dt><dd><tt>read&nbsp;two&nbsp;ints<br>
+ <dl><dt><a name="-collatz_read"><strong>collatz_read</strong></a>(string)</dt><dd><tt>read&nbsp;two&nbsp;ints<br>
 s&nbsp;a&nbsp;string<br>
 return&nbsp;a&nbsp;list&nbsp;of&nbsp;two&nbsp;ints,&nbsp;representing&nbsp;the&nbsp;beginning&nbsp;and&nbsp;end&nbsp;of&nbsp;a&nbsp;range,&nbsp;[i,&nbsp;j]</tt></dd></dl>
- <dl><dt><a name="-collatz_solve"><strong>collatz_solve</strong></a>(r, w)</dt><dd><tt>r&nbsp;a&nbsp;reader<br>
+ <dl><dt><a name="-collatz_solve"><strong>collatz_solve</strong></a>(read, write)</dt><dd><tt>r&nbsp;a&nbsp;reader<br>
 w&nbsp;a&nbsp;writer</tt></dd></dl>
 </td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -41,6 +39,6 @@ w&nbsp;a&nbsp;writer</tt></dd></dl>
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>eager_cache</strong> = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236, 262, 257, 239, 252, 234, 247, 260, 242, ...]<br>
-<strong>lazy_cache</strong> = {}</td></tr></table>
+<td width="100%"><strong>EAGER_CACHE</strong> = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236, 262, 257, 239, 252, 234, 247, 260, 242, ...]<br>
+<strong>LAZY_CACHE</strong> = {}</td></tr></table>
 </body></html>

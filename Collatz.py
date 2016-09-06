@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+"""Main Collatz Functions, these functions will take in starting and stopping
+values for the Collatz range and return the maximum number of cycles needed to
+satisfy the Collatz Conjecture"""
 # ---------------------------
 # projects/collatz/Collatz.py
 # Copyright (C) 2016
@@ -10,7 +12,7 @@
 # global cache
 #-------------
 
-eager_cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236,
+EAGER_CACHE = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236,
                262, 257, 239, 252, 234, 247, 260, 242, 255, 268, 237, 250,
                263, 263, 276, 258, 209, 271, 271, 253, 266, 266, 235, 279,
                248, 261, 212, 274, 243, 256, 256, 269, 269, 269, 251, 282,
@@ -58,23 +60,23 @@ eager_cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236,
                407, 363, 283, 270, 270, 314, 283, 358, 332, 314, 345, 252,
                314, 314, 283, 389, 345, 314, 314, 283, 345, 327, 358, 327,
                314, 314, 358, 327, 283, 358, 376, 296, 283, 314, 327, 283,
-               389, 389, 345, 327, 252, 327, 327, 265, 340, 296, 358, 327, 
+               389, 389, 345, 327, 252, 327, 327, 265, 340, 296, 358, 327,
                252, 296, 358, 265, 327, 296, 327, 327, 265, 371, 327, 234,
-               371, 340, 296, 296, 265, 340, 327, 340, 340, 309, 265, 265, 
-               309, 309, 278, 309, 371, 327, 309, 340, 371, 371, 309, 278, 
-               384, 353, 340, 309, 278, 278, 340, 278, 322, 353, 309, 309, 
-               309, 353, 322, 278, 353, 371, 353, 278, 247, 309, 322, 291, 
+               371, 340, 296, 296, 265, 340, 327, 340, 340, 309, 265, 265,
+               309, 309, 278, 309, 371, 327, 309, 340, 371, 371, 309, 278,
+               384, 353, 340, 309, 278, 278, 340, 278, 322, 353, 309, 309,
+               309, 353, 322, 278, 353, 371, 353, 278, 247, 309, 322, 291,
                322, 384, 340, 322, 247, 247, 322, 322, 260, 291, 353, 353,
                291, 322, 247, 291, 353, 335, 322, 335, 322, 291, 322, 322,
                366, 322, 247, 366, 335, 291, 260, 366, 291, 304, 304, 335,
                335, 353, 335, 304, 291, 304, 304, 441, 304, 348, 322, 304,
-               335, 260, 291, 366, 304, 273, 379, 348, 335, 335, 304, 229, 
+               335, 260, 291, 366, 304, 273, 379, 348, 335, 335, 304, 229,
                348, 335, 379, 379, 348, 304, 304, 273, 379, 348, 317, 348,
                410, 366, 348, 273, 361, 273, 273, 317, 286, 317, 361, 335,
                286, 348, 286, 255, 317, 317, 348, 361, 392, 304, 348, 317,
                317, 286, 286, 348, 317, 330, 361, 330, 317, 423, 286, 361,
                330, 317, 361, 361, 379, 299, 286, 374, 361, 317, 330, 299,
-               330, 330, 348, 343, 330, 255, 268, 299, 330, 299, 436, 361, 
+               330, 330, 348, 343, 330, 255, 268, 299, 330, 299, 436, 361,
                299, 361, 330, 330, 299, 286, 299, 361, 255, 405, 312, 299,
                330, 299, 330, 268, 374, 330, 299, 299, 374, 343, 387, 299,
                268, 268, 255, 343, 330, 343, 405, 281, 361, 343, 268, 268,
@@ -139,7 +141,7 @@ eager_cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236,
                362, 349, 331, 318, 362, 362, 362, 305, 380, 331, 300, 362,
                256, 331, 375, 318, 287, 362, 318, 331, 331, 300, 318, 468,
                300, 331, 393, 393, 331, 349, 344, 269, 362, 393, 362, 331,
-               256, 331, 437, 300, 331, 300, 393, 269, 437, 300, 331, 362, 
+               256, 331, 437, 300, 331, 300, 393, 269, 437, 300, 331, 362,
                344, 300, 331, 362, 287, 331, 300, 331, 300, 313, 300, 375,
                300, 300, 362, 362, 406, 300, 406, 300, 331, 375, 344, 331,
                300, 437, 375, 269, 331, 300, 331, 269, 468, 375, 344, 344,
@@ -165,7 +167,7 @@ eager_cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236,
                401, 401, 264, 357, 339, 370, 339, 339, 339, 308, 383, 339,
                277, 339, 339, 432, 339, 339, 339, 277, 277, 445, 308, 308,
                370, 339, 308, 339, 326, 370, 476, 308, 383, 339, 339, 339,
-               326, 370, 308, 277, 308, 370, 339, 370, 414, 308, 414, 277, 
+               326, 370, 308, 277, 308, 370, 339, 370, 414, 308, 414, 277,
                321, 383, 339, 352, 445, 308, 507, 308, 383, 277, 339, 308,
                277, 339, 277, 352, 383, 352, 352, 339, 352, 383, 383, 277,
                383, 326, 277, 352, 308, 414, 383, 308, 414, 277, 414, 308,
@@ -178,85 +180,85 @@ eager_cache = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236,
                321, 321, 321, 321, 321, 352, 290, 259, 365, 290, 290, 365,
                365, 352, 352, 440, 277, 396, 396, 290]
 
-lazy_cache = dict()
+LAZY_CACHE = dict()
 
 # ------------
 # collatz_read
 # ------------
 
-def collatz_read(s):
+def collatz_read(string):
     """
     read two ints
     s a string
     return a list of two ints, representing the beginning and end of a range, [i, j]
     """
-    a = s.split()
-    if len(a) != 2:
-        return[ 0, 0]
-    return [int(a[0]), int(a[1])]
+    string_array = string.split()
+    if len(string_array) != 2:
+        return[0, 0]
+    return [int(string_array[0]), int(string_array[1])]
 
 # ------------
 # collatz_eval
 # ------------
 
-def collatz_eval(i, j):
+def collatz_eval(ith, jth):
     """
     i the beginning of the range, inclusive
     j the end       of the range, inclusive
     return the max cycle length of the range [i, j]
     """
     try:
-        if i == 0 or j == 0 or i > 1000000 or j > 1000000:
+        if ith == 0 or jth == 0 or ith > 1000000 or jth > 1000000:
             raise IOError('Invalid Input')
-        maxCycles = 0
-        if i > j:
-            temp = i
-            i = j
-            j = temp
-        if i < (j //2):
-            i = j // 2
-        interval = j - i
-        x = i
-        while x <= j:
-            if x % 500 == 1 and interval >= 500:
-                interval_cycle_count = eager_cache[x // 500]
-                if interval_cycle_count > maxCycles:
-                    maxCycles = interval_cycle_count
-                x += 500
+        max_cycles = 0
+        if ith > jth:
+            temp = ith
+            ith = jth
+            jth = temp
+        if ith < (jth //2):
+            ith = jth // 2
+        interval = jth - ith
+        current = ith
+        while current <= jth:
+            if current % 500 == 1 and interval >= 500:
+                interval_cycle_count = EAGER_CACHE[current // 500]
+                if interval_cycle_count > max_cycles:
+                    max_cycles = interval_cycle_count
+                current += 500
                 interval -= 500
                 continue
-            if x in lazy_cache:
-                cycleCount = lazy_cache[x]
-                if cycleCount > maxCycles:
-                    maxCycles = cycleCount
-            t = x
-            cycleCount = 1
-            while t > 1:
-                if t in lazy_cache:
-                    cycleCount += lazy_cache[t] - 1
-                    lazy_cache[x] = cycleCount
+            if current in LAZY_CACHE:
+                cycle_count = LAZY_CACHE[current]
+                if cycle_count > max_cycles:
+                    max_cycles = cycle_count
+            test_current = current
+            cycle_count = 1
+            while test_current > 1:
+                if test_current in LAZY_CACHE:
+                    cycle_count += LAZY_CACHE[test_current] - 1
+                    LAZY_CACHE[current] = cycle_count
                     break
-                if t % 2 == 0:
-                    t = t / 2
-                    cycleCount += 1
+                if test_current % 2 == 0:
+                    test_current = test_current / 2
+                    cycle_count += 1
                 else:
-                    t = (t * 3 + 1) // 2
-                    cycleCount += 2
-                
-            if cycleCount > maxCycles:
-                maxCycles = cycleCount
-                lazy_cache[x] = cycleCount
-            x += 1
+                    test_current = (test_current * 3 + 1) // 2
+                    cycle_count += 2
+
+            if cycle_count > max_cycles:
+                max_cycles = cycle_count
+                LAZY_CACHE[current] = cycle_count
+            current += 1
             interval -= 1
-        return maxCycles
-    except IOError as e:
+        return max_cycles
+    except IOError as exception:
         return "Invalid Input"
 # -------------
 # collatz_print
 # -------------
 
 
-def collatz_print(w, i, j, v):
+def collatz_print(write, ith, jth, value):
     """
     print three ints
     w a writer
@@ -264,24 +266,22 @@ def collatz_print(w, i, j, v):
     j the end       of the range, inclusive
     v the max cycle length
     """
-    w.write(u"" + str(i) + " " + str(j) + " " + str(v) + "\n")
+    write.write(u"" + str(ith) + " " + str(jth) + " " + str(value) + "\n")
 
 # -------------
 # collatz_solve
 # -------------
 
 
-def collatz_solve(r, w):
+def collatz_solve(read, write):
 
     """
     r a reader
     w a writer
     """
-    for s in r:
-        i, j = collatz_read(s)
-        if i == 0 and j == 0:
+    for string in read:
+        ith, jth = collatz_read(string)
+        if ith == 0 and jth == 0:
             continue
-        # print(str(i) + " " + str(j))
-        v = collatz_eval(i, j)
-        collatz_print(w, i, j, v)
-
+        value = collatz_eval(ith, jth)
+        collatz_print(write, ith, jth, value)
