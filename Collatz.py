@@ -181,7 +181,7 @@ EAGER_CACHE = [144, 179, 182, 180, 209, 217, 199, 238, 215, 210, 192, 236,
                365, 352, 352, 440, 277, 396, 396, 290]
 
 """This lazy cache will be populated during runtime to store computed values
-of intermiate Callatz cycles that are not included in a interval from the 
+of intermiate Callatz cycles that are not included in a interval from the
 eager cache above."""
 LAZY_CACHE = dict()
 
@@ -215,67 +215,69 @@ def collatz_eval(ith, jth):
     return the max cycle length of the range [i, j]
     """
     try:
-      # raise IO Error if the input range is outside of the allowed values
-      if ith == 0 or jth == 0 or ith > 1000000 or jth > 1000000:
-          raise IOError('Invalid Input')
-      # start of collatz algorithm
-      max_cycles = 0
-      # check for range correctness, with the lower bound bing the ith value
-      # and the upper bound being the jth value
-      if ith > jth:
-          temp = ith
-          ith = jth
-          jth = temp
-      # optimization, if the lower bound is less than half of the upper bound
-      # then the range can be reduced to only the values of jth/2.
-      if ith < (jth // 2):
-        ith = jth // 2
-      # Interval is the number of values that will be evaluated for the collatz
-      # range
-      interval = jth - ith
-      current = ith # Sets the current value to the lower bound, the ith value
-      while current <= jth:
-        # Check for the current iteration to be on a interval boundary for the eager
-        # cache, if the current iteration is a boundary and the range will include the
-        # entire interval, retrieve the cached max cycle length.
-        if current % 500 == 1 and interval >= 500:
-            interval_cycle_count = EAGER_CACHE[current // 500]
-            if interval_cycle_count > max_cycles:
-                max_cycles = interval_cycle_count
-            current += 500
-            interval -= 500
-            continue
-        # Check if the current value is in the lazy cache, if it is, use the cached value
-        if current in LAZY_CACHE:
-            cycle_count = LAZY_CACHE[current]
+        # raise IO Error if the input range is outside of the allowed values
+        if ith == 0 or jth == 0 or ith > 1000000 or jth > 1000000:
+            raise IOError('Invalid Input')
+        # start of collatz algorithm
+        max_cycles = 0
+        # check for range correctness, with the lower bound bing the ith value
+        # and the upper bound being the jth value
+        if ith > jth:
+            temp = ith
+            ith = jth
+            jth = temp
+        # optimization, if the lower bound is less than half of the upper bound
+        # then the range can be reduced to only the values of jth/2.
+        if ith < (jth // 2):
+            ith = jth // 2
+        # Interval is the number of values that will be evaluated for the collatz
+        # range
+        interval = jth - ith
+        current = ith  # Sets the current value to the lower bound, the ith value
+        while current <= jth:
+            # Check for the current iteration to be on a interval boundary for the eager
+            # cache, if the current iteration is a boundary and the range will include the
+            # entire interval, retrieve the cached max cycle length.
+            if current % 500 == 1 and interval >= 500:
+                interval_cycle_count = EAGER_CACHE[current // 500]
+                if interval_cycle_count > max_cycles:
+                    max_cycles = interval_cycle_count
+                current += 500
+                interval -= 500
+                continue
+            # Check if the current value is in the lazy cache, if it is, use
+            # the cached value
+            if current in LAZY_CACHE:
+                cycle_count = LAZY_CACHE[current]
+                if cycle_count > max_cycles:
+                    max_cycles = cycle_count
+                    continue
+            # While loop to test value that are not covered by the eager cache and have not yet
+            # been computed for the lazy cache. This loop will run through the collatz algorithm
+            # for the current value to find the cycle length.
+            test_current = current
+            cycle_count = 1
+            while test_current > 1:
+                if test_current in LAZY_CACHE:
+                    cycle_count += LAZY_CACHE[test_current] - 1
+                    LAZY_CACHE[current] = cycle_count
+                    break
+                if test_current % 2 == 0:
+                    test_current = test_current / 2
+                    cycle_count += 1
+                else:
+                    test_current = (test_current * 3 + 1) // 2
+                    cycle_count += 2
+            # At termination of collatz loop, if the current cycle length is greater than the
+            # saved max cycle length, then the new max cycle length will be saved. The cycle
+            # length of the current value will also be added to the lazy cache
+            # for later access
             if cycle_count > max_cycles:
                 max_cycles = cycle_count
-                continue
-        # While loop to test value that are not covered by the eager cache and have not yet
-        # been computed for the lazy cache. This loop will run through the collatz algorithm
-        # for the current value to find the cycle length.
-        test_current = current
-        cycle_count = 1
-        while test_current > 1:
-            if test_current in LAZY_CACHE:
-                cycle_count += LAZY_CACHE[test_current] - 1
                 LAZY_CACHE[current] = cycle_count
-                break
-            if test_current % 2 == 0:
-                test_current = test_current / 2
-                cycle_count += 1
-            else:
-                test_current = (test_current * 3 + 1) // 2
-                cycle_count += 2
-        # At termination of collatz loop, if the current cycle length is greater than the 
-        # saved max cycle length, then the new max cycle length will be saved. The cycle
-        # length of the current value will also be added to the lazy cache for later access
-        if cycle_count > max_cycles:
-            max_cycles = cycle_count
-            LAZY_CACHE[current] = cycle_count
-        current += 1
-        interval -= 1
-      return max_cycles
+            current += 1
+            interval -= 1
+        return max_cycles
     except IOError as exception:
         return "Invalid Input"
 # -------------
