@@ -1,3 +1,9 @@
+commit 6f305ce06437f2b139d6e0b9e2f54a5757d4da73
+Author: Otis <otisbrower@yahoo.com>
+Date:   Mon Sep 5 19:28:59 2016 -0500
+
+    updated code for pylint
+
 commit 550c6c2cc82b0dc4b21918906969e44d8a5dfbd0
 Author: Otis <otisbrower@yahoo.com>
 Date:   Mon Sep 5 18:46:12 2016 -0500

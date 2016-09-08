@@ -186,6 +186,7 @@ LAZY_CACHE = dict()
 # collatz_read
 # ------------
 
+
 def collatz_read(string):
     """
     read two ints
@@ -201,6 +202,7 @@ def collatz_read(string):
 # collatz_eval
 # ------------
 
+
 def collatz_eval(ith, jth):
     """
     i the beginning of the range, inclusive
@@ -215,7 +217,7 @@ def collatz_eval(ith, jth):
             temp = ith
             ith = jth
             jth = temp
-        if ith < (jth //2):
+        if ith < (jth // 2):
             ith = jth // 2
         interval = jth - ith
         current = ith
@@ -274,7 +276,6 @@ def collatz_print(write, ith, jth, value):
 
 
 def collatz_solve(read, write):
-
     """
     r a reader
     w a writer

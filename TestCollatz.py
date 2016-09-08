@@ -23,6 +23,7 @@ from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
 
 
 class TestCollatz(TestCase):
+
     """Class for Collatz Unit Tests"""
     # ----
     # read
@@ -59,12 +60,9 @@ class TestCollatz(TestCase):
         self.assertEqual(ith, 0)
         self.assertEqual(jth, 0)
 
-
-
     # ----
     # eval
     # ----
-
     def test_eval_1(self):
         """collatz_ eval function test 1"""
         value = collatz_eval(1, 10)
@@ -147,11 +145,9 @@ class TestCollatz(TestCase):
         collatz_print(write, 201, 210, 89)
         self.assertEqual(write.getvalue(), "201 210 89\n")
 
-
     # -----
     # solve
     # -----
-
     def test_solve_1(self):
         """collatz_solve function test 1"""
         read = StringIO(u"1 10\n100 200\n201 210\n900 1000\n")
@@ -165,7 +161,8 @@ class TestCollatz(TestCase):
         read = StringIO(u"10 1\n200 100\n1000 900\n")
         write = StringIO()
         collatz_solve(read, write)
-        self.assertEqual(write.getvalue(), "10 1 20\n200 100 125\n1000 900 174\n")
+        self.assertEqual(
+            write.getvalue(), "10 1 20\n200 100 125\n1000 900 174\n")
 
     def test_solve_3(self):
         """collatz_solve function test 3"""

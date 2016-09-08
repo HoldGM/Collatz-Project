@@ -33,8 +33,8 @@ RunCollatz.tmp: RunCollatz.in RunCollatz.out RunCollatz.py
 TestCollatz.tmp: TestCollatz.py
 	-pylint Collatz.py
 	-pylint TestCollatz.py
-	coverage run    --branch TestCollatz.py >  TestCollatz.tmp 2>&1
-	coverage report -m                      >> TestCollatz.tmp
+	coverage-3.5 run    --branch TestCollatz.py >  TestCollatz.tmp 2>&1
+	coverage-3.5 report -m                      >> TestCollatz.tmp
 	cat TestCollatz.tmp
 
 check:
@@ -83,5 +83,8 @@ status:
 	git branch
 	git remote -v
 	git status
+
+profile: 
+	 python3.5 -m cProfile RunCollatz.py < RunCollatz.in > CollatzProfile.out
 
 test: Collatz.html Collatz.log RunCollatz.tmp TestCollatz.tmp collatz-tests check
